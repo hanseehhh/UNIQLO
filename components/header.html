@@ -1,0 +1,177 @@
+<style>
+  /* header */
+
+  header {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0.5rem;
+    transition: transform 0.3s ease;
+    display: none;
+    flex-direction: column;
+  }
+
+  header.index {
+    z-index: 0;
+  }
+
+  /* header scroll show */
+  header.show {
+    display: flex;
+    animation: popup 2s ease-out;
+    -webkit-animation: popup 2s ease-out;
+  }
+  /* finish header scroll show */
+
+  header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  header nav .logo {
+    background-color: transparent;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+  }
+
+  header nav .logo img {
+    width: 3rem;
+    height: auto;
+  }
+
+  header nav .top-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  header nav .favorite {
+    color: red;
+  }
+
+  header nav .search {
+    background-color: transparent;
+    border: none;
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  header nav .menu {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  header nav .menu .material-icons {
+    font-size: 36px;
+    color: #333;
+  }
+
+  @media (max-width: 364px) {
+    .img-header img {
+      width: 40%;
+    }
+
+    header nav .logo img {
+      width: 2rem;
+      height: auto;
+    }
+
+    header nav .menu .material-icons {
+      font-size: 2rem;
+      color: #333;
+    }
+  }
+</style>
+
+<header>
+  <nav>
+    <a href="" class="logo">
+      <img src="assets/logo/Logo_7.png" alt="UNIQLO-Logo" />
+    </a>
+    <div class="top-icon">
+      <a href="/contents/search-magazine.html">
+        <span class="material-icons"> search </span>
+      </a>
+      <a href="/contents/favorite-magazine.html">
+        <span class="material-icons favorite"> favorite </span>
+      </a>
+      <button class="menu">
+        <span class="material-icons"> menu </span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // nav animation
+  const $header = $("header");
+  const $firstAnimation = $(".first-animation");
+
+  const firstAnimationHeight = $firstAnimation.outerHeight() - 10;
+
+  let lastKnownScrollPosition = 0;
+  let ticking = false;
+
+  function toggleHeaderVisibility(scrollPos) {
+    if (scrollPos >= firstAnimationHeight) {
+      $header.addClass("show");
+    } else {
+      $header.removeClass("show");
+    }
+  }
+
+  $(window).on("scroll", function () {
+    const currentScrollPosition = $(this).scrollTop();
+    const isScrollingDown = currentScrollPosition > lastKnownScrollPosition;
+
+    lastKnownScrollPosition = currentScrollPosition;
+
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        toggleHeaderVisibility(currentScrollPosition, isScrollingDown);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // fetch data sidebar
+  $(".sidebar-container").load("components/sidebar.html", function () {
+    $("#close-sidebar").click(function () {
+      $(".sidebar").removeClass("show");
+      setTimeout(() => {
+        $(".fullbar").removeClass("show");
+      }, 500);
+    });
+  });
+
+  // menu
+  $(".menu").click(function () {
+    $(".sidebar").addClass("show");
+    $(".fullbar").addClass("show");
+    $("header").addClass("index");
+  });
+
+  $("#close-sidebar").click(function () {
+    $(".sidebar").removeClass("show");
+    setTimeout(() => {
+      $(".fullbar").removeClass("show");
+    }, 500);
+  });
+</script>
