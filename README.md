@@ -1,1 +1,1 @@
-Uniqlo Remake Website is a Uniqlo website that has been redesigned and improved in terms of performance based on the preferences of a fan (fan made). This was done to give the Uniqlo website a fresh and new look and feel. The Uniqlo website includes a comprehensive catalog of Uniqlo's “LifeWear” collection and features an e-commerce platform for purchasing products directly on the Uniqlo website.
+
